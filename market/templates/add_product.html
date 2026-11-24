@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>পণ্য যোগ করুন</title>
+<style>
+body{font-family:sans-serif;background:#f0f7ed;padding:15px}
+.box{max-width:480px;margin:auto;background:white;padding:22px;border-radius:12px}
+input,select,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
+button{background:#16833b;color:white;border:0;border-radius:7px}
+a{color:#16833b}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🌾 নতুন পণ্য যোগ করুন</h2>
+{% for message in messages %}<p>{{ message }}</p>{% endfor %}
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<label>পণ্যের নাম</label>
+<input name="name" required placeholder="যেমন: ধান">
+<label>ক্যাটাগরি</label>
+<select name="category" required>
+<option value="ধান ও চাল">ধান ও চাল</option>
+<option value="শাকসবজি">শাকসবজি</option>
+<option value="ফলমূল">ফলমূল</option>
+<option value="গম ও ভুট্টা">গম ও ভুট্টা</option>
+<option value="আলু, পেঁয়াজ ও মসলা">আলু, পেঁয়াজ ও মসলা</option>
+<option value="বীজ ও সার">বীজ ও সার</option>
+<option value="মাছ">মাছ</option>
+<option value="গবাদি পশু ও হাঁস-মুরগি">গবাদি পশু ও হাঁস-মুরগি</option>
+<option value="কৃষি যন্ত্রপাতি">কৃষি যন্ত্রপাতি</option>
+<option value="অন্যান্য">অন্যান্য</option>
+</select>
+<label>দাম (টাকা প্রতি একক)</label>
+<input type="number" name="price" min="0.01" step="0.01" required>
+<label>পরিমাণ</label>
+<input type="number" name="quantity" min="1" required>
+<label>পরিমাণের একক</label>
+<select name="unit" required>
+<option value="কেজি">কেজি</option>
+<option value="মণ">মণ</option>
+<option value="বস্তা">বস্তা</option>
+<option value="পিস">পিস</option>
+<option value="লিটার">লিটার</option>
+<option value="টন">টন</option>
+</select>
+<label>পণ্যের ছবি</label>
+<input type="file" name="image" accept="image/*">
+<label>বিস্তারিত</label>
+<textarea name="description" rows="4"></textarea>
+<button type="submit">পণ্য যোগ করুন</button>
+</form>
+<p><a href="/">হোমে ফিরে যান</a></p>
+</div>
+</body>
+</html>

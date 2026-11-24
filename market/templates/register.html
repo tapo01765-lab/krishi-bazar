@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>রেজিস্ট্রেশন | কৃষি বাজার</title>
+<style>
+body{font-family:sans-serif;background:#f0f7ed;padding:20px}
+.box{max-width:380px;margin:40px auto;background:white;padding:24px;border-radius:12px}
+input,button{width:100%;padding:13px;margin:9px 0;box-sizing:border-box}
+button{background:#16833b;color:white;border:0;border-radius:7px}
+</style></head>
+<body><div class="box">
+<h2>🌾 নতুন অ্যাকাউন্ট</h2>
+{% for message in messages %}<p>{{ message }}</p>{% endfor %}
+<form method="POST">
+{% csrf_token %}
+<input name="username" placeholder="ইউজারনেম" required>
+<input type="email" name="email" placeholder="ইমেইল (ঐচ্ছিক)">
+<input type="password" name="password" placeholder="পাসওয়ার্ড" required>
+<button type="submit">অ্যাকাউন্ট তৈরি করুন</button>
+</form>
+<p>অ্যাকাউন্ট আছে? <a href="{% url 'login' %}">লগইন করুন</a></p>
+<a href="/">হোমে ফিরে যান</a>
+</div></body></html>

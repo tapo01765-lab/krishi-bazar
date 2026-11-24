@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>আমার অর্ডার | কৃষি বাজার</title>
+<style>
+body{font-family:sans-serif;background:#f0f7ed;padding:15px}
+.box{max-width:750px;margin:auto}
+.card{background:white;padding:16px;margin:12px 0;border-radius:10px}
+button{padding:9px;background:#16833b;color:white;border:0;border-radius:6px;margin:4px}
+</style></head>
+<body><div class="box">
+<h2>📦 আমার কেনা অর্ডার</h2>
+{% for order in buy_orders %}
+<div class="card">
+<b>{{ order.product_name }}</b>
+<p>পরিমাণ: {{ order.quantity }} {{ order.unit }}</p>
+<p>মোট দাম: ৳{{ order.total_price }}</p>
+<p>অবস্থা: {{ order.get_status_display }}</p>
+</div>
+{% empty %}<p>এখনো কোনো অর্ডার করেননি।</p>{% endfor %}
+
+<h2>🌾 আমার বিক্রির অর্ডার</h2>
+{% for order in sell_orders %}
+<div class="card">
+<b>{{ order.product_name }}</b>
+<p>ক্রেতা: {{ order.buyer.username }}</p>
+<p>পরিমাণ: {{ order.quantity }} {{ order.unit }}</p>
+<p>মোট দাম: ৳{{ order.total_price }}</p>
+<p>অবস্থা: {{ order.get_status_display }}</p>
+{% if order.status != 'cancelled' and order.status != 'completed' %}
+<form method="POST" action="{% url 'update_order_status' order.id 'confirmed' %}" style="display:inline">
+{% csrf_token %}<button>অর্ডার গ্রহণ</button>
+</form>
+<form method="POST" action="{% url 'update_order_status' order.id 'completed' %}" style="display:inline">
+{% csrf_token %}<button>সম্পন্ন</button>
+</form>
+<form method="POST" action="{% url 'update_order_status' order.id 'cancelled' %}" style="display:inline">
+{% csrf_token %}<button>বাতিল</button>
+</form>
+{% endif %}
+</div>
+{% empty %}<p>এখনো কোনো বিক্রির অর্ডার নেই।</p>{% endfor %}
+<p><a href="/">হোমে ফিরে যান</a></p>
+</div></body></html>
